@@ -12,7 +12,7 @@ install() {
   rm -rf mpv*.tar.gz
   cd mpv*
   ./bootstrap.py
-  ./waf configure --prefix=$ASDF_INSTALL_PATH
+  ./waf configure --prefix=$install_dir
   ./waf
   ./waf install || exit 1
 }
