@@ -8,7 +8,7 @@ install() {
   cd $build_dir
 
   curl -fSL -JO https://github.com/mpv-player/mpv/archive/v$version.tar.gz
-  tar -xzf mpv*.tar.gz
+  tar -xf mpv*.tar.gz
   rm -rf mpv*.tar.gz
   cd mpv*
   ./bootstrap.py
