@@ -11,10 +11,14 @@ install() {
   tar -xf mpv*.tar.gz
   rm -rf mpv*.tar.gz
   cd mpv*
-  ./bootstrap.py
-  ./waf configure --prefix=$install_dir
-  ./waf
-  ./waf install || exit 1
+  meson setup build
+  meson configure build --prefix=$install_dir
+  meson compile -C build || exit 1
+  meson install -C build || exit 1
+  # ./bootstrap.py
+  # ./waf configure --prefix=$install_dir
+  # ./waf
+  # ./waf install || exit 1
 }
 
 install $ASDF_INSTALL_TYPE $ASDF_INSTALL_VERSION $ASDF_INSTALL_PATH
