@@ -5,16 +5,19 @@ install() {
   install_dir=$3
 
   build_dir=$(mktemp -d)
-  cd $build_dir
 
-  curl -fSL -JO https://github.com/mpv-player/mpv/archive/v$version.tar.gz
-  tar -xf mpv*.tar.gz
-  rm -rf mpv*.tar.gz
-  cd mpv*
-  meson setup build
-  meson configure build --prefix=$install_dir
-  meson compile -C build || exit 1
-  meson install -C build || exit 1
+  cd $build_dir
+  git clone --depth 1 --recursive https://github.com/haasn/libplacebo
+  cd $build_dir/libplacebo
+  meson setup --prefix=$install_dir --default-library=both ./build
+  meson install -C build || exit
+
+  cd $build_dir
+  git clone --depth 1 --recursive https://github.com/mpv-player/mpv
+  cd $build_dir/mpv
+  meson setup --prefix=$install_dir --pkg-config-path=$install_dir/lib/pkgconfig --default-library=static ./build
+  meson install -C build || exit
+
   # ./bootstrap.py
   # ./waf configure --prefix=$install_dir
   # ./waf
