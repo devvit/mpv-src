@@ -6,6 +6,8 @@ install() {
 
   build_dir=$(mktemp -d)
 
+  export PKG_CONFIG_PATH=/opt/local/libexec/ffmpeg6/lib/pkgconfig
+
   cd $build_dir
   git clone --depth 1 --recursive https://github.com/haasn/libplacebo
   cd $build_dir/libplacebo
