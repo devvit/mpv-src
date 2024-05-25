@@ -9,13 +9,13 @@ install() {
   cd $build_dir
   git clone --depth 1 --recursive --shallow-submodules https://github.com/haasn/libplacebo
   cd $build_dir/libplacebo
-  meson setup --pkg-config-path=/opt/local/libexec/ffmpeg6/lib/pkgconfig --prefix=$install_dir --default-library=both ./build
+  meson setup --prefix=$install_dir --default-library=both ./build
   meson install -C build || exit
 
   cd $build_dir
   git clone --depth 1 --recursive -b v${version} --shallow-submodules https://github.com/mpv-player/mpv
   cd $build_dir/mpv
-  meson setup --pkg-config-path=/opt/local/libexec/ffmpeg6/lib/pkgconfig --prefix=$install_dir --pkg-config-path=$install_dir/lib/pkgconfig --default-library=both ./build
+  meson setup --prefix=$install_dir --pkg-config-path=$install_dir/lib/pkgconfig --default-library=both ./build
   meson install -C build || exit
 
   # ./bootstrap.py
