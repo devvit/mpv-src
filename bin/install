@@ -6,24 +6,27 @@ install() {
 
   build_dir=$(mktemp -d)
 
-  # --pkg-config-path=/opt/local/libexec/ffmpeg6/lib/pkgconfig
+  if [[ $version == "legacy" ]]; then
+    cd $build_dir
+    git clone --depth 1 --recursive -b v0.36.0 --shallow-submodules https://github.com/mpv-player/mpv
+    cd $build_dir/mpv
+    ./bootstrap.py
+    ./waf configure --prefix=$install_dir
+    ./waf
+    ./waf install || exit 1
+  else
+    cd $build_dir
+    git clone --depth 1 --recursive --shallow-submodules https://github.com/haasn/libplacebo
+    cd $build_dir/libplacebo
+    meson setup --prefix=$install_dir --default-library=both ./build
+    meson install -C build || exit
 
-  cd $build_dir
-  git clone --depth 1 --recursive --shallow-submodules https://github.com/haasn/libplacebo
-  cd $build_dir/libplacebo
-  meson setup --prefix=$install_dir --default-library=both ./build
-  meson install -C build || exit
-
-  cd $build_dir
-  git clone --depth 1 --recursive -b v${version} --shallow-submodules https://github.com/mpv-player/mpv
-  cd $build_dir/mpv
-  meson setup --prefix=$install_dir --pkg-config-path=$install_dir/lib/pkgconfig --default-library=both ./build
-  meson install -C build || exit
-
-  # ./bootstrap.py
-  # ./waf configure --prefix=$install_dir
-  # ./waf
-  # ./waf install || exit 1
+    cd $build_dir
+    git clone --depth 1 --recursive -b v${version} --shallow-submodules https://github.com/mpv-player/mpv
+    cd $build_dir/mpv
+    meson setup --prefix=$install_dir --pkg-config-path=$install_dir/lib/pkgconfig --default-library=both ./build
+    meson install -C build || exit
+  fi
 }
 
 install $ASDF_INSTALL_TYPE $ASDF_INSTALL_VERSION $ASDF_INSTALL_PATH
