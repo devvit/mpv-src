@@ -14,9 +14,8 @@ install() {
   meson setup --prefix=$install_dir --default-library=both ./build
   meson install -C build || exit
 
-  # -b v${version}
   cd $build_dir
-  git clone --depth 1 --recursive --shallow-submodules https://github.com/mpv-player/mpv
+  git clone --depth 1 --recursive -b v${version} --shallow-submodules https://github.com/mpv-player/mpv
   cd $build_dir/mpv
   meson setup --prefix=$install_dir --pkg-config-path=$install_dir/lib/pkgconfig --default-library=both ./build
   meson install -C build || exit
