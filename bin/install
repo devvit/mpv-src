@@ -9,7 +9,7 @@ install() {
   cd $build_dir
   git clone --depth 1 --recursive --shallow-submodules https://github.com/haasn/libplacebo
   cd $build_dir/libplacebo
-  meson setup --prefix=$install_dir --default-library=both ./build
+  meson setup --prefix=$install_dir --pkg-config-path=/opt/local/libexec/ffmpeg6/lib/pkgconfig --default-library=both ./build
   meson install -C build || exit
 
   cd $build_dir
