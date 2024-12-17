@@ -24,7 +24,7 @@ install() {
     cd $build_dir
     git clone --depth 1 --recursive -b v${version} --shallow-submodules https://github.com/mpv-player/mpv
     cd $build_dir/mpv
-    meson setup --prefix=$install_dir --pkg-config-path="/opt/local/libexec/ffmpeg6/lib/pkgconfig:$install_dir/lib/pkgconfig" --default-library=both ./build
+    meson setup --prefix=$install_dir --pkg-config-path="/opt/local/libexec/ffmpeg6/lib/pkgconfig" --default-library=both ./build
     meson install -C build || exit
   fi
 }
