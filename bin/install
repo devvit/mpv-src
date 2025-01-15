@@ -6,6 +6,12 @@ install() {
 
   build_dir=$(mktemp -d)
 
+  cd $build_dir
+  git clone -b release/6.1 --depth 1 https://github.com/FFmpeg/FFmpeg
+  cd FFmpeg
+  ./configure --prefix=$install_dir
+  make -s install || exit 1
+
   if [[ $version == "legacy" ]]; then
     cd $build_dir
     git clone --depth 1 --recursive -b v0.36.0 --shallow-submodules https://github.com/mpv-player/mpv
