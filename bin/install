@@ -6,12 +6,6 @@ install() {
 
   build_dir=$(mktemp -d)
 
-  cd $build_dir
-  git clone -b release/6.1 --depth 1 https://github.com/FFmpeg/FFmpeg
-  cd FFmpeg
-  ./configure --prefix=$install_dir --enable-libdav1d
-  make -s install || exit 1
-
   lua_dir=$(dirname `asdf which luajit`)/../lib/pkgconfig
 
   if [[ $version == "legacy" ]]; then
@@ -32,7 +26,7 @@ install() {
     cd $build_dir
     git clone --depth 1 --recursive -b v${version} --shallow-submodules https://github.com/mpv-player/mpv
     cd $build_dir/mpv
-    meson setup --prefix=$install_dir --pkg-config-path="$install_dir/lib/pkgconfig,$lua_dir" --default-library=both -Dlua=auto ./build
+    meson setup --prefix=$install_dir --pkg-config-path="$install_dir/lib/pkgconfig,/opt/local/libexec/ffmpeg6/lib/pkgconfig,$lua_dir" --default-library=both -Dlua=auto ./build
     meson install -C build || exit
   fi
 }
