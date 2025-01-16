@@ -12,6 +12,8 @@ install() {
   ./configure --prefix=$install_dir --enable-libdav1d
   make -s install || exit 1
 
+  lua_dir=$(dirname `asdf which luajit`)/../lib/pkgconfig
+
   if [[ $version == "legacy" ]]; then
     cd $build_dir
     git clone --depth 1 --recursive -b v0.36.0 --shallow-submodules https://github.com/mpv-player/mpv
@@ -30,7 +32,7 @@ install() {
     cd $build_dir
     git clone --depth 1 --recursive -b v${version} --shallow-submodules https://github.com/mpv-player/mpv
     cd $build_dir/mpv
-    meson setup --prefix=$install_dir --pkg-config-path="$install_dir/lib/pkgconfig" --default-library=both -Dlua=auto ./build
+    meson setup --prefix=$install_dir --pkg-config-path="$install_dir/lib/pkgconfig,$lua_dir" --default-library=both -Dlua=auto ./build
     meson install -C build || exit
   fi
 }
