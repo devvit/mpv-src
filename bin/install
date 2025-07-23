@@ -6,14 +6,6 @@ install() {
 
   build_dir=$(mktemp -d)
 
-  cd $build_dir
-  git clone -b release/6.1 --depth 1 https://github.com/FFmpeg/FFmpeg
-  cd FFmpeg
-  ./configure --prefix=$install_dir --enable-libdav1d --disable-htmlpages --disable-doc
-  make -s install || exit 1
-
-  lua_dir=$(dirname `asdf which luajit`)/../lib/pkgconfig
-
   if [[ $version == "legacy" ]]; then
     cd $build_dir
     git clone --depth 1 --recursive -b v0.36.0 --shallow-submodules https://github.com/mpv-player/mpv
@@ -23,6 +15,14 @@ install() {
     ./waf
     ./waf install || exit 1
   else
+    cd $build_dir
+    git clone -b release/6.1 --depth 1 https://github.com/FFmpeg/FFmpeg
+    cd FFmpeg
+    ./configure --prefix=$install_dir --enable-libdav1d --disable-htmlpages --disable-doc
+    make -s install || exit 1
+
+    lua_dir=$(dirname `asdf which luajit`)/../lib/pkgconfig
+
     cd $build_dir
     git clone --depth 1 --recursive --shallow-submodules https://github.com/haasn/libplacebo
     cd $build_dir/libplacebo
