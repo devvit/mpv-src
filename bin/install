@@ -16,7 +16,7 @@ install() {
     ./waf install || exit 1
   else
     cd $build_dir
-    git clone -b release/8.0 --depth 1 https://github.com/FFmpeg/FFmpeg
+    git clone -b release/6.1 --depth 1 https://github.com/FFmpeg/FFmpeg
     cd FFmpeg
     ./configure --prefix=$install_dir --enable-libdav1d --disable-htmlpages --disable-doc
     make -s install || exit 1
