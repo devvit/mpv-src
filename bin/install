@@ -29,13 +29,13 @@ install() {
     meson setup --prefix=$install_dir --default-library=both ./build
     meson install -C build || exit
 
-    export PKG_CONFIG_PATH="$install_dir/lib/pkgconfig:$lua_dir"
+    export PKG_CONFIG_PATH="$install_dir/lib/pkgconfig:$lua_dir:$PKG_CONFIG_PATH"
 
     cd $build_dir
     git clone --depth 1 --recursive -b v${version} --shallow-submodules https://github.com/mpv-player/mpv
     cd $build_dir/mpv
     # /opt/local/libexec/ffmpeg6/lib/pkgconfig
-    meson setup --prefix=$install_dir --pkg-config-path="$PKG_CONFIG_PATH" --default-library=both -Dlua=auto -Dc_args="-I$install_dir/include" -Dcpp_args="-I$install_dir/include" ./build
+    meson setup --prefix=$install_dir --pkg-config-path="$PKG_CONFIG_PATH" --default-library=both -Dlua=auto ./build
     meson install -C build || exit
   fi
 }
