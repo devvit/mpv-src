@@ -30,6 +30,8 @@ install() {
     meson install -C build || exit
 
     export PKG_CONFIG_PATH="$install_dir/lib/pkgconfig:$lua_dir:$PKG_CONFIG_PATH"
+    export CFLAGS="-I$install_dir/include $CFLAGS"
+    export CXXFLAGS="-I$install_dir/include $CXXFLAGS"
 
     cd $build_dir
     git clone --depth 1 --recursive -b v${version} --shallow-submodules https://github.com/mpv-player/mpv
