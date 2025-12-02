@@ -10,7 +10,6 @@ install() {
     cd $build_dir
     git clone --depth 1 --recursive -b v0.36.0 --shallow-submodules https://github.com/mpv-player/mpv
     cd $build_dir/mpv
-    export PKG_CONFIG_PATH="$lua_dir"
     ./bootstrap.py
     ./waf configure --prefix=$install_dir
     ./waf
