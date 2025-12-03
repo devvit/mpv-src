@@ -23,11 +23,11 @@ install() {
 
     # lua_dir=$(dirname $(asdf which luajit))/../lib/pkgconfig
 
-    # cd $build_dir
-    # git clone --depth 1 --recursive --shallow-submodules https://github.com/haasn/libplacebo
-    # cd $build_dir/libplacebo
-    # meson setup --prefix=$install_dir --default-library=both ./build
-    # meson install -C build || exit
+    cd $build_dir
+    git clone --depth 1 --recursive --shallow-submodules https://github.com/haasn/libplacebo
+    cd $build_dir/libplacebo
+    meson setup --prefix=$install_dir --default-library=both ./build
+    meson install -C build || exit
 
     cd $build_dir
     git clone --depth 1 --recursive -b v${version} --shallow-submodules https://github.com/mpv-player/mpv
