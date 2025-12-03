@@ -21,7 +21,7 @@ install() {
     # ./configure --prefix=$install_dir --enable-libdav1d --disable-htmlpages --disable-doc --disable-x86asm
     # make -s install || exit 1
 
-    # lua_dir=$(dirname $(asdf which luajit))/../lib/pkgconfig
+    lua_dir=$(dirname $(asdf which luajit))/../lib/pkgconfig
 
     cd $build_dir
     git clone --depth 1 --recursive --shallow-submodules https://github.com/haasn/libplacebo
