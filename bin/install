@@ -30,7 +30,7 @@ install() {
     meson install -C build || exit
 
     cd $build_dir
-    git clone --depth 1 --recursive -b v${version} --shallow-submodules https://github.com/mpv-player/mpv
+    git clone --depth 1 --recursive -b ${version} --shallow-submodules https://github.com/mpv-player/mpv
     cd $build_dir/mpv
     meson setup --prefix=$install_dir \
       --pkg-config-path="$install_dir/lib/pkgconfig:/opt/local/libexec/ffmpeg8/lib/pkgconfig:$lua_dir:$PKG_CONFIG_PATH" \
